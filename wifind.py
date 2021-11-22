@@ -7,8 +7,11 @@ ip_gate = os.popen("ip r | sed -n '2p' | grep -oP '\K[^ ]*' | sed -n '1p'").read
 ip_gate = ip_gate.replace("\n", "")
 os.system("nmap -sn " + ip_gate + " -Pn 2>&1 | grep '(' > temp.txt")
 wifi_list = open("temp.txt").readlines()
-if wifi_list[2] == ("Nmap done: 0 IP addresses (0 hosts up) scanned in 0.00 seconds"):
+wifi_error = (wifi_list[2])
+wifi_error = wifi_error.replace("\n", "")
+if (wifi_error) == ("Nmap done: 0 IP addresses (0 hosts up) scanned in 0.00 seconds"):
 	print ("NO RESULTS! TRY RECONNECTING TO YOUR NETWORK!")
+	os.system("rm temp.txt")
 	exit()
 ip_list = []
 host_list = []
