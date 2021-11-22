@@ -1,8 +1,9 @@
 #!/usr/bin/env python3 
 import os
+import time
 import colorama
 from colorama import Fore, Style
-print ("\nFetching info on all connected hosts...\n\n")
+print ("\nFETCHING ALL CONNECTED HOSTS...\n")
 ip_gate = os.popen("ip r | sed -n '2p' | grep -oP '\K[^ ]*' | sed -n '1p'").read()
 ip_gate = ip_gate.replace("\n", "")
 os.system("nmap -sn " + ip_gate + " -Pn 2>&1 | grep '(' > temp.txt")
@@ -29,4 +30,9 @@ for a in range(2, len(wifi_list) - 1):
 	host_list.append(temp_line)
 for a in range(0 , len(host_list)):
 	print (Fore.BLUE + "[" + Fore.RED + str(a + 1) + Fore.BLUE + "] " + Fore.YELLOW + host_list[a] + Style.RESET_ALL + " : " + ip_list[a])
+print("\nFETCHING ALL OPEN PORTS...\n")
+time.sleep(1)
+for a in range(0, len(host_list)):
+	print (Fore.BLUE + "[" + Fore.RED + str(a + 1) + Fore.BLUE + "] " + Fore.YELLOW + host_list[a] + Style.RESET_ALL + " : " + ip_list[a])
+	os.system("nmap " + ip_list[a] + " | grep 'open'")
 os.system("rm temp.txt")
