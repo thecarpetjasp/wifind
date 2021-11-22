@@ -28,8 +28,15 @@ for a in range(2, len(wifi_list) - 1):
 	temp_line = os.popen("echo '" + temp_line + "' | grep -oP 'Nmap scan report for \K[^ (]*'").read()
 	temp_line = temp_line.replace("\n", "")
 	host_list.append(temp_line)
+def split(word):
+	return [char for char in word]
 for a in range(0 , len(host_list)):
-	print (Fore.BLUE + "[" + Fore.RED + str(a + 1) + Fore.BLUE + "] " + Fore.YELLOW + host_list[a] + Style.RESET_ALL + " : " + ip_list[a])
+	len_check = split(host_list[a])
+	if len(len_check) < 13:
+		space = ("		:	")
+	else:
+		space = ("	:	")
+	print (Fore.BLUE + "[" + Fore.RED + str(a + 1) + Fore.BLUE + "] " + Fore.YELLOW + host_list[a] + Style.RESET_ALL + space + ip_list[a])
 print("\nFETCHING ALL OPEN PORTS...\n")
 time.sleep(1)
 for a in range(0, len(host_list)):
